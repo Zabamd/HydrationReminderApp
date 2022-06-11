@@ -13,7 +13,6 @@ namespace HydrationReminderApp
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 

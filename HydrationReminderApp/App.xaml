@@ -27,6 +27,24 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+            <!--
+                STYLE START
+            -->
+            <Style x:Key="LabelStyle" TargetType="Label">
+
+            </Style>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+
+            </Style>
+            <Style x:Key="ErrorMessage" TargetType="Label">
+
+            </Style>
+            <!--
+                STYLE END
+            -->
         </ResourceDictionary>        
     </Application.Resources>
 </Application>
