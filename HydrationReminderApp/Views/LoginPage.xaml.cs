@@ -12,7 +12,7 @@ namespace HydrationReminderApp.Views
             InitializeComponent();
             this.BindingContext = new LoginViewModel();
         }
-        public  void displayError(string error)
+        public  void DisplayError(string error)
         {
             LoginErrorMessage.Text = error;
         }

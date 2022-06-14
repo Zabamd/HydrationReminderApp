@@ -1,5 +1,6 @@
 ﻿using HydrationReminderApp.Models;
 using HydrationReminderApp.Services;
+using HydrationReminderApp.Views;
 using System.ComponentModel;
 using Xamarin.Forms;
 
@@ -10,18 +11,30 @@ namespace HydrationReminderApp.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Command SignupCommand { get; }
+        public Command LoginCommand { get; }
 
-        private string process;
-        public string Process
+        Profile newUser;
+
+        private string message;
+        public string Message
         {
-            get { return process; }
+            get { return message; }
             set
             {
-                process = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("Process"));
+                message = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Message"));
             }
         }
-
+        private bool messageCheck = false;
+        public bool MessageCheck
+        {
+            get { return messageCheck; }
+            set
+            {
+                messageCheck = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("MessageCheck"));
+            }
+        }
         private string username;
         public string Username
         {
@@ -62,10 +75,31 @@ namespace HydrationReminderApp.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs("RepeatPassword"));
             }
         }
+        private double weight = 0;
+        public double Weight
+        {
+            get { return weight; }
+            set
+            {
+                weight = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Weight"));
+            }
+        }
+        private int workoutTime = 0;
+        public int WorkoutTime
+        {
+            get { return workoutTime; }
+            set
+            {
+                workoutTime = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("WorkoutTime"));
+            }
+        }
 
         public SignUpViewModel()
         {
             SignupCommand = new Command(OnSignUpClicked);
+            LoginCommand = new Command(OnLoginClicked);
         }
         private void OnSignUpClicked(object obj)
         {
@@ -73,32 +107,52 @@ namespace HydrationReminderApp.ViewModels
             {   //simple equation for required water intake in liters
 
                 double WeightPounds = Weight * 2.2;
-                double reqiredIntakeOnz = (WeightPounds * 0.5) * (WorkoutTime * 12);
+                double reqiredIntakeOnz = (WeightPounds * 0.5) + ((WorkoutTime/30) * 12);
 
                 //convertion to liters
                 return ((reqiredIntakeOnz * 29.57) / 1000);
             }
 
-            var newUser = new Profile()
+            newUser = new Profile()
             {
                 Username = username,
                 Email = email,
                 Password = password,
-                Weight = 40,
-                WorkoutTime = 40,
-                WaterIntake = WaterIntakeCalc(40, 40)
+                Weight = weight,
+                WorkoutTime = workoutTime,
+                WaterIntake = WaterIntakeCalc(weight, workoutTime)
             };
             if (PasswordChecks(newUser.Password))
-                Process = DataBaseService.SignUp(newUser.Username, newUser.Password, newUser.Email, newUser.Weight, newUser.WorkoutTime);
-            else; //error message
-
+            {
+                Message = DataBaseService.SignUp(newUser.Username, newUser.Password, newUser.Email, newUser.Weight, newUser.WorkoutTime, newUser.WaterIntake);
+                MessageCheck = OnMessageDisplay(Message);
+                
+            }
+            else;
+        
+        }
+        private async void OnLoginClicked(object obj)
+        {
+            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
         private bool PasswordChecks(string password)
         {
             bool isValid = true;
             if(password.Length <8 ) isValid = false;
+            if (password.Length < 8) isValid = false;
             return isValid;
           
+        }
+        private bool OnMessageDisplay(string response)
+        {
+            if(response == "Succesfull Sign Up. Please Login")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         //ADD CHECKING PASSWORD

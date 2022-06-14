@@ -13,8 +13,8 @@ namespace HydrationReminderApp.Views
         {
             InitializeComponent();
             this.BindingContext = new SignUpViewModel();
-
         }
+
         
     }
 }

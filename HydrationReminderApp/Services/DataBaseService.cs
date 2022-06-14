@@ -1,6 +1,8 @@
 ﻿using HydrationReminderApp.Models;
 using SQLite;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace HydrationReminderApp.Services
 {
@@ -45,7 +47,7 @@ namespace HydrationReminderApp.Services
             }
         }
         //SignUp Method -> creates new profile object and after checking if profile already exists in db inserts it into it;
-        public static string SignUp(string username, string password, string email, double weight, int workoutTime)
+        public static string SignUp(string username, string password, string email, double weight, int workoutTime, double waterIntake)
         {
             Init();
             var profile = new Profile
@@ -54,7 +56,8 @@ namespace HydrationReminderApp.Services
                 Password = password,
                 Email = email,
                 Weight = weight,
-                WorkoutTime = workoutTime
+                WorkoutTime = workoutTime,
+                WaterIntake = waterIntake
 
             };
 
@@ -64,11 +67,11 @@ namespace HydrationReminderApp.Services
             if (check == null)
             {
                 db.Insert(profile);
-                return "Succesful SignUp. Please LogIn";
+                return "Succesfull Sign Up. Please Login";
             }
             else
             {
-                return "Profile already exists. Please LogIn";
+                return "Profile already exists. Please Login";
             }
 
         }
@@ -83,6 +86,17 @@ namespace HydrationReminderApp.Services
         {
             Init();
             // db.Update<Profile>();
+        }
+        public static Profile GetProfileData(string username, string password)
+        {
+            Init();
+            var query = from s in db.Table<Profile>()
+                        where s.Username == username && s.Password == password
+                        select s;
+
+
+           
+            return query.FirstOrDefault();
         }
         //PROFILE TABLE ENDS
         //DATA TABLE STARTS

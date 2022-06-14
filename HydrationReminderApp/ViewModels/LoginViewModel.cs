@@ -13,12 +13,16 @@ namespace HydrationReminderApp.ViewModels
         public Command LoginCommand { get; }
         public Command SignupCommand { get; }
 
+        public Profile Profile { get; set; }
 
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
             SignupCommand = new Command(OnSignUp);
+
+       
         }
+
         private string username;
         public string Username
         {
@@ -59,7 +63,10 @@ namespace HydrationReminderApp.ViewModels
 
 
             if (IsValid)
+            {
+                Profile = DataBaseService.GetProfileData(user.Username, user.Password);
                 await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+            }
             else;
 
               
@@ -69,6 +76,8 @@ namespace HydrationReminderApp.ViewModels
         {
             await Shell.Current.GoToAsync($"//{nameof(SignUpPage)}");
         }
+
+
 
     }
 }

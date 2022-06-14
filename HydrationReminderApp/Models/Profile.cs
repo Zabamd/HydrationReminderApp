@@ -23,9 +23,5 @@ namespace HydrationReminderApp.Models
         public int WorkoutTime { get; set; }
         [Column("WaterIntake")]
         public double WaterIntake { get; set; }
-
-
-
-
     }
 }

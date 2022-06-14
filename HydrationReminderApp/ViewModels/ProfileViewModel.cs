@@ -1,18 +1,16 @@
-﻿
+﻿using System.ComponentModel;
 using Xamarin.Forms;
+using FreshMVVM;
 
 namespace HydrationReminderApp.ViewModels
 {
-    public class ProfileViewModel : ContentView
+    public class ProfileViewModel : FreshBaseViewModel
     {
+        
+        
         public ProfileViewModel()
         {
-            Content = new StackLayout
-            {
-                Children = {
-                    new Label { Text = "Welcome to Xamarin.Forms!" }
-                }
-            };
+
         }
     }
 }

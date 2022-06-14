@@ -19,12 +19,38 @@
             <Entry x:Name="PasswordEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Password}" IsPassword="True" />
             <Label x:Name ="RePasswordLabel" Text="Repeat Password: "/>
             <Entry x:Name="RepeatPasswordEntry " Style="{x:StaticResource EntryStyle}" Text="{Binding RepeatPassword}" IsPassword="True" />
-            <Label x:Name ="WeightSliderLabel" Text="Choose your Weight: "/>
-            <Slider Maximum="145" Minimum="45"  x:Name="WeightSlider" />
-            <Label x:Name ="WorkoutTimeSliderLabel" Text="How long are your daily workouts?(in min)"/>
-            <Slider Maximum="300" Minimum="0"  x:Name="WorkoutSlider" />
-            <Button x:Name ="SignUpButton" Text ="Sign Up" Command="{Binding SignupCommand}"/>
-            <Label x:Name="ErrorLabel" Text="{Binding Process}" />
+            
+            <Label x:Name ="WeightSliderLabel" Text="{Binding Weight, StringFormat='Choose your weight: {0} kg'}" />
+            <Slider Maximum="145" Minimum="45"  x:Name="WeightSlider" Value="{Binding Weight}" Style="{x:StaticResource SliderStyle}"/>
+            <Label x:Name ="WorkoutTimeSliderLabel" Text="{Binding WorkoutTime ,StringFormat = 'Daily workout time: {0} min'}"/>
+            <Slider Maximum="300" Minimum="0"  x:Name="WorkoutSlider" Style="{x:StaticResource SliderStyle}" Value="{Binding WorkoutTime}"/>
+            <Button x:Name ="SignUpButton" Text ="Sign Up" Command="{Binding SignupCommand}" IsVisible="True"  IsEnabled="True">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding MessageCheck}" Value="True" TargetType="{x:Type Button}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="IsVisible" Value="False" />
+
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="LoginButton" Text="Login" Command="{Binding LoginCommand}" IsVisible="false" IsEnabled="False">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding MessageCheck}" Value="True" TargetType="{x:Type Button}">
+                                <Setter Property="IsEnabled" Value="True" />
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            
+            <Label x:Name="ErrorLabel" Text="{Binding Message}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
