@@ -1,8 +1,4 @@
-﻿using HydrationReminderApp.Services;
-using HydrationReminderApp.Views;
-using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace HydrationReminderApp
 {

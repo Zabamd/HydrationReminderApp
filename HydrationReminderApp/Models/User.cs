@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HydrationReminderApp.Models
+﻿namespace HydrationReminderApp.Models
 {
-    internal class User
-    { 
-        public User(string username, string password )
+    public class User
+    {
+        public User(string username, string password)
         {
             this.Username = username;
             this.Password = password;

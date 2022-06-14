@@ -1,7 +1,4 @@
-﻿using HydrationReminderApp.ViewModels;
-using HydrationReminderApp.Views;
-using System;
-using System.Collections.Generic;
+﻿using HydrationReminderApp.Views;
 using Xamarin.Forms;
 
 namespace HydrationReminderApp
@@ -11,11 +8,9 @@ namespace HydrationReminderApp
         public AppShell()
         {
             InitializeComponent();
-            
+
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-            /*
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
-            */
+
         }
 
     }

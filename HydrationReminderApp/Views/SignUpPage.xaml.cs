@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using HydrationReminderApp.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace HydrationReminderApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class signupPagexaml : ContentPage
+    public partial class SignUpPage : ContentPage
     {
-        public signupPagexaml()
+      
+        public SignUpPage()
         {
             InitializeComponent();
+            this.BindingContext = new SignUpViewModel();
         }
+
+        
     }
 }

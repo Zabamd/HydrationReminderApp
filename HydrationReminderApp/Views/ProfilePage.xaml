@@ -1,12 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HydrationReminderApp.Views.ProfilePage">
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodels="clr-namespace:HydrationReminderApp.ViewModels"
+             mc:Ignorable="d"
+             x:Class="HydrationReminderApp.Views.ProfilePage"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled"
+            >
+    <ContentPage.BindingContext>
+        <viewmodels:ProfileViewModel />
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+            <Label Text="{Binding Username, StringFormat='Welcome, {0}!'}" />
+            
+            <!--UPDATE WEIGHT -->
+            <StackLayout Padding="10">
+                <Label x:Name="NewWeightLabel" Text="{Binding Weight, StringFormat='New weight: {0} kg'}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Slider x:Name="NewWeightSlider" Value="{Binding Weight}" Maximum="200" Minimum="30" Style="{x:StaticResource SliderStyle}"/>
+
+                <Button x:Name="UpdateWeightButton" Command="{Binding UpdateWeightClicked}" Text="Update Weight" />
+
+                <!--UPDATE WORKOUT TIME -->
+                <Label x:Name="NewWorkoutTimeLabel" Text="{Binding WorkoutTime, StringFormat='New daily workout time: {0} min'}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Slider x:Name="NewWorkoutTimeSlider" Value="{Binding WorkoutTime}" Maximum="300" Minimum="0"  Style="{x:StaticResource SliderStyle}"/>
+
+                <Button x:Name="UpdateWorkoutButton" Command="{Binding UpdateWorkoutClicked}" Text="Update workout time"/>
+
+            <!--DELETE ACCOUNT-->
+                <Button x:Name="DeleteAccount" Command="{Binding DeleteAccountClicked}" Text="Delete Account" BackgroundColor="Red"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,12 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HydrationReminderApp.Views.signupPagexaml">
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodels="clr-namespace:HydrationReminderApp.ViewModels"
+             x:DataType="viewmodels:SignUpViewModel"
+             Shell.NavBarIsVisible="False"
+             x:Class="HydrationReminderApp.Views.SignUpPage"
+             mc:Ignorable="d"
+             >
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout  Padding="10,0,10,0" VerticalOptions="Center">
+            <Label x:Name ="UsernameLabel" Text="Username:" />
+            <Entry x:Name="UsernameEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Username}"/>
+            <Label  x:Name ="EmailLabel" Text="Email: "/>
+            <Entry x:Name="EmailEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Email}"/>
+            <Label x:Name ="PasswordLabel" Text="Password: "/>
+            <Entry x:Name="PasswordEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Password}" IsPassword="True" />
+            <Label x:Name ="RePasswordLabel" Text="Repeat Password: "/>
+            <Entry x:Name="RepeatPasswordEntry " Style="{x:StaticResource EntryStyle}" Text="{Binding RepeatPassword}" IsPassword="True" />
+            
+            <Label x:Name ="WeightSliderLabel" Text="{Binding Weight, StringFormat='Choose your weight: {0} kg'}" />
+            <Slider Maximum="145" Minimum="45"  x:Name="WeightSlider" Value="{Binding Weight}" Style="{x:StaticResource SliderStyle}"/>
+            <Label x:Name ="WorkoutTimeSliderLabel" Text="{Binding WorkoutTime ,StringFormat = 'Daily workout time: {0} min'}"/>
+            <Slider Maximum="300" Minimum="0"  x:Name="WorkoutSlider" Style="{x:StaticResource SliderStyle}" Value="{Binding WorkoutTime}"/>
+            <Button x:Name ="SignUpButton" Text ="Sign Up" Command="{Binding SignupCommand}" IsVisible="True"  IsEnabled="True">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding MessageCheck}" Value="True" TargetType="{x:Type Button}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="IsVisible" Value="False" />
+
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="LoginButton" Text="Login" Command="{Binding LoginCommand}" IsVisible="false" IsEnabled="False">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding MessageCheck}" Value="True" TargetType="{x:Type Button}">
+                                <Setter Property="IsEnabled" Value="True" />
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            
+            <Label x:Name="ErrorLabel" Text="{Binding Message}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

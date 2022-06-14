@@ -42,6 +42,10 @@
             <Style x:Key="ErrorMessage" TargetType="Label">
 
             </Style>
+            <Style x:Key="SliderStyle" TargetType="Slider">
+                <Setter Property="MaximumTrackColor" Value="Red"/>
+                <Setter Property="MinimumTrackColor" Value="LightGreen"/>
+            </Style>
             <!--
                 STYLE END
             -->
