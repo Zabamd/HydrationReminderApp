@@ -1,22 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
+﻿using SQLite;
 
 namespace HydrationReminderApp.Models
-{
-    public class Profile : ContentView
+{   /// <summary>
+    /// Tabel used for account personal data 
+    /// </summary>
+    [Table("Profile")]
+    public class Profile
     {
-        public Profile()
-        {
-            Content = new StackLayout
-            {
-                Children = {
-                    new Label { Text = "Welcome to Xamarin.Forms!" }
-                }
-            };
-        }
+
+        [PrimaryKey, AutoIncrement]
+        [Column("Id")]
+        public int Id { get; set; }
+        [Column("Username")]
+        public string Username { get; set; }
+        [Column("Password")]
+        public string Password { get; set; }
+        [Column("Email")]
+        public string Email { get; set; }
+        [Column("Weight")]
+        public double Weight { get; set; }
+        [Column("WorkoutTime")]
+        public int WorkoutTime { get; set; }
+        [Column("WaterIntake")]
+        public double WaterIntake { get; set; }
+
+
+
+
     }
 }

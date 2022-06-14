@@ -20,11 +20,12 @@
                 <Entry x:Name="UsernameEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Username}"/>
                 <Label Text="Password: " x:Name="PasswordLabel" Style="{x:StaticResource LabelStyle}" />
                 <Entry IsPassword="True" x:Name="PasswordEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Password}"/>
-                <Grid ColumnDefinitions="*,*" RowDefinitions="2*">
-                    <Button Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}" Style="{x:StaticResource ButtonStyle}"/>
-                    <Button Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="Signin" Command="{Binding SigninCommand}" Style="{x:StaticResource ButtonStyle}"/>
-                </Grid>
-                <Label x:Name="LoginErrorMessage" Text="" Style ="{x:StaticResource ErrorMessage}" />
+                
+                    <Button  VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}" Style="{x:StaticResource ButtonStyle}"/>
+                    <Button  VerticalOptions="Center" Text="Sign Up" Command="{Binding SignupCommand}" Style="{x:StaticResource ButtonStyle}"/>
+                
+            
+            <Label x:Name="LoginErrorMessage" Style ="{x:StaticResource ErrorMessage}" />
             
             <!--Login Form END-->
         </StackLayout>

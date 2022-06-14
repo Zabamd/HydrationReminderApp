@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
+﻿using SQLite;
+using System;
 
 namespace HydrationReminderApp.Models
-{
-    public class UserData 
+{   /// <summary>
+    /// Table Used for storing user data
+    /// </summary>
+    [Table("UserData")]
+    public class UserData
     {
+        [PrimaryKey,AutoIncrement,Column("Id")]
+        public int Id { get; set; }
+        [Column("Username")]
+        public string Username { get; set; }
+        [Column("Amount")]
+        public int Amount { get; set; }
+        [Column("Date")]
+        public DateTime Date { get; set; }
     }
 }

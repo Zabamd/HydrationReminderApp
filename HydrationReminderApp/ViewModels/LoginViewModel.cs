@@ -1,7 +1,8 @@
-﻿using HydrationReminderApp.Views;
-using HydrationReminderApp.Models;
-using Xamarin.Forms;
+﻿using HydrationReminderApp.Models;
+using HydrationReminderApp.Services;
+using HydrationReminderApp.Views;
 using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace HydrationReminderApp.ViewModels
 {
@@ -10,12 +11,13 @@ namespace HydrationReminderApp.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Command LoginCommand { get; }
-        public Command SigninCommand { get; }
+        public Command SignupCommand { get; }
 
 
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
+            SignupCommand = new Command(OnSignUp);
         }
         private string username;
         public string Username
@@ -37,22 +39,36 @@ namespace HydrationReminderApp.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs("Password"));
             }
         }
+        //needs fixing
+        public string errorMessage = "";
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("ErrorMessage"));
+            }
+        }
 
         private async void OnLoginClicked(object obj)
         {
             var user = new User(username, password);
 
-            bool IsValid = ChceckCredentials(user);
-      
+            bool IsValid = DataBaseService.Login(user);
+
 
             if (IsValid)
                 await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
             else;
-                
+
+              
+
         }
-        private bool ChceckCredentials(User user)
+        private async void OnSignUp(object obj)
         {
-            if (user.Username == "kaczka" && user.Password == "123") return true; else return false;
+            await Shell.Current.GoToAsync($"//{nameof(SignUpPage)}");
         }
+
     }
 }

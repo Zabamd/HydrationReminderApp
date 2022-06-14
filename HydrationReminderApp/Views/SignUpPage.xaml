@@ -1,12 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HydrationReminderApp.Views.signupPagexaml">
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodels="clr-namespace:HydrationReminderApp.ViewModels"
+             x:DataType="viewmodels:SignUpViewModel"
+             Shell.NavBarIsVisible="False"
+             x:Class="HydrationReminderApp.Views.SignUpPage"
+             mc:Ignorable="d"
+             >
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout  Padding="10,0,10,0" VerticalOptions="Center">
+            <Label x:Name ="UsernameLabel" Text="Username:" />
+            <Entry x:Name="UsernameEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Username}"/>
+            <Label  x:Name ="EmailLabel" Text="Email: "/>
+            <Entry x:Name="EmailEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Email}"/>
+            <Label x:Name ="PasswordLabel" Text="Password: "/>
+            <Entry x:Name="PasswordEntry" Style="{x:StaticResource EntryStyle}" Text="{Binding Password}" IsPassword="True" />
+            <Label x:Name ="RePasswordLabel" Text="Repeat Password: "/>
+            <Entry x:Name="RepeatPasswordEntry " Style="{x:StaticResource EntryStyle}" Text="{Binding RepeatPassword}" IsPassword="True" />
+            <Label x:Name ="WeightSliderLabel" Text="Choose your Weight: "/>
+            <Slider Maximum="145" Minimum="45"  x:Name="WeightSlider" />
+            <Label x:Name ="WorkoutTimeSliderLabel" Text="How long are your daily workouts?(in min)"/>
+            <Slider Maximum="300" Minimum="0"  x:Name="WorkoutSlider" />
+            <Button x:Name ="SignUpButton" Text ="Sign Up" Command="{Binding SignupCommand}"/>
+            <Label x:Name="ErrorLabel" Text="{Binding Process}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
