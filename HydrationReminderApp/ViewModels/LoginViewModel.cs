@@ -13,7 +13,7 @@ namespace HydrationReminderApp.ViewModels
         public Command LoginCommand { get; }
         public Command SignupCommand { get; }
 
-        public Profile Profile { get; set; }
+        public static Profile Profile { get; set; }
 
         public LoginViewModel()
         {
