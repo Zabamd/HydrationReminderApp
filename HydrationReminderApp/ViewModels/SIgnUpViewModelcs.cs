@@ -1,7 +1,10 @@
 ﻿using HydrationReminderApp.Models;
 using HydrationReminderApp.Services;
 using HydrationReminderApp.Views;
+using System;
 using System.ComponentModel;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
 namespace HydrationReminderApp.ViewModels
@@ -103,15 +106,6 @@ namespace HydrationReminderApp.ViewModels
         }
         private void OnSignUpClicked(object obj)
         {
-            double WaterIntakeCalc(double Weight, int WorkoutTime)
-            {   //simple equation for required water intake in liters
-
-                double WeightPounds = Weight * 2.2;
-                double reqiredIntakeOnz = (WeightPounds * 0.5) + ((WorkoutTime/30) * 12);
-
-                //convertion to liters
-                return ((reqiredIntakeOnz * 29.57) / 1000);
-            }
 
             newUser = new Profile()
             {
@@ -122,27 +116,88 @@ namespace HydrationReminderApp.ViewModels
                 WorkoutTime = workoutTime,
                 WaterIntake = WaterIntakeCalc(weight, workoutTime)
             };
-            if (PasswordChecks(newUser.Password))
+            //Check for correct format
+            if (PasswordChecks(newUser.Password, repeatPassword) && EmailCheck(newUser.Email))
             {
                 Message = DataBaseService.SignUp(newUser.Username, newUser.Password, newUser.Email, newUser.Weight, newUser.WorkoutTime, newUser.WaterIntake);
+
+                //Response
                 MessageCheck = OnMessageDisplay(Message);
                 
             }
-            else;
+            else
+            {
+                Message = "";
+                if (!PasswordChecks(newUser.Password, repeatPassword))
+                {
+                    Message += "Password must contain one small character, one large character, one number and one special sign.\nPassword and repeated password must match.";
+                    password = "";
+                    repeatPassword = "";
+                }
+                if (EmailCheck(newUser.Email))
+                {
+                    Message += "Incorrect emial format";
+                    email = "";
+                }
+            }
         
         }
         private async void OnLoginClicked(object obj)
         {
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            Message = "";
+            MessageCheck = false;
+            username = "";
+            email = "";
+            password = "";
+            repeatPassword = "";
         }
-        private bool PasswordChecks(string password)
+        //Checks if password contains small character, large character, number and special sign using regex 
+        private bool PasswordChecks(string password, string repeatedPassword)
         {
-            bool isValid = true;
-            if(password.Length <8 ) isValid = false;
-            if (password.Length < 8) isValid = false;
-            return isValid;
-          
+            //look for small character. large character, special sign and number
+            string regex = "^(?=.*[a-z])(?=."
+                            + "*[A-Z])(?=.*\\d)"
+                            + "(?=.*[-+_!@#$%^&*., ?]).+$";
+            Regex p = new Regex(regex);
+            Match match = p.Match(password);
+
+            if(match.Success && password.Length >= 8 && (password == repeatedPassword))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+        //Checks for correct email format
+        private bool EmailCheck(string email)
+        {
+            //Regex checks if email format is correct
+            string regex = @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+                           + "@"
+                           + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$";
+
+            Regex p = new Regex(regex);
+            Match match = p.Match(email);
+
+            if(match.Success)
+                return true;
+            else
+                return false;
+        }
+        // equation for required water intake in liters
+        private double WaterIntakeCalc(double Weight, int WorkoutTime)
+        { 
+            //kg to pounds
+            double WeightPounds = Weight * 2.2;
+            double reqiredIntakeOnz = (WeightPounds * 0.5) + ((WorkoutTime / 30) * 12);
+
+            //convertion onz to ml to liters
+            return ((reqiredIntakeOnz * 29.57) / 1000);
+        }
+        //Based on message form db, change bool value of messageCheck that controls button display in SignUpPage.xaml
         private bool OnMessageDisplay(string response)
         {
             if(response == "Succesfull Sign Up. Please Login")
@@ -154,9 +209,5 @@ namespace HydrationReminderApp.ViewModels
                 return false;
             }
         }
-
-        //ADD CHECKING PASSWORD
-        //CONNECTION TO DB
-        //MAIN SCREEN 
     }
 }

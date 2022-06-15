@@ -9,15 +9,14 @@ using Xamarin.Forms;
     
 namespace HydrationReminderApp.ViewModels
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class MainPageViewModel 
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
 
-        Profile Profile;
-        public MainPageViewModel(Profile profile)
+
+
+        public MainPageViewModel()
         {
-            this.Profile = profile;
         }
 
     }

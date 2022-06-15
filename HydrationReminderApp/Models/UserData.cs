@@ -3,7 +3,7 @@ using System;
 
 namespace HydrationReminderApp.Models
 {   /// <summary>
-    /// Table Used for storing user data
+    /// Table Used for storing  User 
     /// </summary>
     [Table("UserData")]
     public class UserData

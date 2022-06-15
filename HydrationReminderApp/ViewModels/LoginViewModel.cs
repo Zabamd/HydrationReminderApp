@@ -1,5 +1,6 @@
 ﻿using HydrationReminderApp.Models;
 using HydrationReminderApp.Services;
+using HydrationReminderApp.ViewModels;
 using HydrationReminderApp.Views;
 using System.ComponentModel;
 using Xamarin.Forms;
@@ -13,7 +14,7 @@ namespace HydrationReminderApp.ViewModels
         public Command LoginCommand { get; }
         public Command SignupCommand { get; }
 
-        public static Profile Profile { get; set; }
+       
 
         public LoginViewModel()
         {
@@ -64,16 +65,25 @@ namespace HydrationReminderApp.ViewModels
 
             if (IsValid)
             {
-                Profile = DataBaseService.GetProfileData(user.Username, user.Password);
+                ISessionContext.Profile = DataBaseService.GetProfileData(user.Username, user.Password);
+                username = "";
+                password = "";
+                errorMessage = "";
                 await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
             }
-            else;
+            else
+            {
+                errorMessage = "Incorrect username or password";
+            }
 
               
 
         }
         private async void OnSignUp(object obj)
         {
+            username = "";
+            password = "";
+            errorMessage = "";
             await Shell.Current.GoToAsync($"//{nameof(SignUpPage)}");
         }
 

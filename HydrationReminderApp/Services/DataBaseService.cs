@@ -46,7 +46,7 @@ namespace HydrationReminderApp.Services
                 return false;
             }
         }
-        //SignUp Method -> creates new profile object and after checking if profile already exists in db inserts it into it;
+        //SignUp Method -> creates new profile object and after checking if profile already exists in db inserts it into db;
         public static string SignUp(string username, string password, string email, double weight, int workoutTime, double waterIntake)
         {
             Init();
@@ -82,11 +82,15 @@ namespace HydrationReminderApp.Services
             db.Delete<Profile>(id);
 
         }
-        public static void UpdateProfile()
+        //Update profile data method
+        public static Profile UpdateProfile(Profile profile)
         {
             Init();
-            // db.Update<Profile>();
+            db.Update(profile);
+            profile = GetProfileData(profile.Username, profile.Password);
+            return profile;
         }
+        //Retrieve profile data based of User.username and User.Password from loginPage
         public static Profile GetProfileData(string username, string password)
         {
             Init();
@@ -94,11 +98,10 @@ namespace HydrationReminderApp.Services
                         where s.Username == username && s.Password == password
                         select s;
 
-
-           
             return query.FirstOrDefault();
         }
         //PROFILE TABLE ENDS
+
         //DATA TABLE STARTS
         public static void ReadData()
         {

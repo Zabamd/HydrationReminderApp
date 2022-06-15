@@ -1,13 +1,14 @@
-﻿using HydrationReminderApp.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
-
+using HydrationReminderApp.Models;
 namespace HydrationReminderApp.ViewModels
-{
-    public interface ISessionContext : INotifyPropertyChanged
+{   
+    /// <summary>
+    /// Class Used to exchange Profile data between ViewModels
+    /// </summary>
+    public class ISessionContext
     {
-        Profile Profile { get; set; }
+        public static Profile Profile { get; set; }
     }
 }
