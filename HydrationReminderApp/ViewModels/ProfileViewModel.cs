@@ -1,10 +1,7 @@
-﻿using System.ComponentModel;
-using HydrationReminderApp.Models;
+﻿using HydrationReminderApp.Services;
 using HydrationReminderApp.Views;
+using System.ComponentModel;
 using Xamarin.Forms;
-using System.Threading.Tasks;
-using System;
-using HydrationReminderApp.Services;
 
 namespace HydrationReminderApp.ViewModels
 {
@@ -12,7 +9,7 @@ namespace HydrationReminderApp.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public  Command UpdateWeightClicked { get; }
+        public Command UpdateWeightClicked { get; }
         public Command UpdateWorkoutClicked { get; }
         public Command DeleteAccountClicked { get; }
         public ProfileViewModel()
@@ -21,7 +18,7 @@ namespace HydrationReminderApp.ViewModels
             UpdateWorkoutClicked = new Command(OnUpdateWorkoutClicked);
             DeleteAccountClicked = new Command(OnDeleteAccountClicked);
         }
-        public string Username { get;} = ISessionContext.Profile.Username;
+        public string Username { get; } = ISessionContext.Profile.Username;
         private double weight = ISessionContext.Profile.Weight;
         public double Weight
         {
@@ -44,16 +41,18 @@ namespace HydrationReminderApp.ViewModels
             }
         }
         private bool deleteConfirm = false;
-        private  void OnUpdateWeightClicked(object obj)
+        private void OnUpdateWeightClicked(object obj)
         {
             ISessionContext.Profile.Weight = weight;
-            ISessionContext.Profile = DataBaseService.UpdateProfile(ISessionContext.Profile);
+            ISessionContext.Profile.WaterIntake = ISessionContext.WaterIntakeCalc(ISessionContext.Profile.Weight, ISessionContext.Profile.WorkoutTime);
+            DataBaseService.UpdateProfile(ISessionContext.Profile);
         }
-     
+
         private void OnUpdateWorkoutClicked(object obj)
         {
             ISessionContext.Profile.WorkoutTime = WorkoutTime;
-            ISessionContext.Profile = DataBaseService.UpdateProfile(ISessionContext.Profile);
+            ISessionContext.Profile.WaterIntake = ISessionContext.WaterIntakeCalc(ISessionContext.Profile.Weight, ISessionContext.Profile.WorkoutTime);
+            DataBaseService.UpdateProfile(ISessionContext.Profile);
         }
         private async void OnDeleteAccountClicked(object ob)
         {
@@ -66,7 +65,7 @@ namespace HydrationReminderApp.ViewModels
             }
             else
             {
-                deleteConfirm=true;
+                deleteConfirm = true;
             }
         }
 

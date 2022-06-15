@@ -1,18 +1,15 @@
 ﻿
+using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace HydrationReminderApp.ViewModels
 {
-    public class HistoryViewModel : ContentView
+    public class HistoryViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public HistoryViewModel()
         {
-            Content = new StackLayout
-            {
-                Children = {
-                    new Label { Text = "Welcome to Xamarin.Forms!" }
-                }
-            };
+            
         }
     }
 }

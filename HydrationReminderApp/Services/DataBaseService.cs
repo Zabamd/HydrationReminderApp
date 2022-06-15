@@ -1,19 +1,25 @@
 ﻿using HydrationReminderApp.Models;
 using SQLite;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace HydrationReminderApp.Services
 {
+    /// <summary>
+    /// Static class containing every database operation used in project
+    /// </summary>
     public static class DataBaseService
     {
         //DB handler
         private static SQLiteConnection db;
         private static SQLiteConnection dbData;
 
+        /// <summary>
+        ///  Inicialization of db for profile information
+        /// </summary>
         public static void Init()
         {
+            //if db exists don't reinitialize
             if (db != null)
                 return;
             //Absolute path to db file
@@ -22,8 +28,12 @@ namespace HydrationReminderApp.Services
             db = new SQLiteConnection(databasePath);
             db.CreateTable<Profile>();
         }
+        /// <summary>
+        /// Inicialization of db for user data
+        /// </summary>
         public static void InitData()
         {
+            //if db exists don't reinitialize
             if (dbData != null)
                 return;
             //Absolute path to db file
@@ -32,7 +42,11 @@ namespace HydrationReminderApp.Services
             dbData = new SQLiteConnection(databasePath);
             dbData.CreateTable<UserData>();
         }
-
+        /// <summary>
+        /// Checks if user exists in db based on User.Username and User.Password and if password is correct
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public static bool Login(User user)
         {
             Init();
@@ -46,7 +60,9 @@ namespace HydrationReminderApp.Services
                 return false;
             }
         }
-        //SignUp Method -> creates new profile object and after checking if profile already exists in db inserts it into db;
+        /// <summary>
+        ///  Creates new profile object and after checking if profile already exists in db, inserts it into db. Returns (string) message based on check
+        /// </summary>
         public static string SignUp(string username, string password, string email, double weight, int workoutTime, double waterIntake)
         {
             Init();
@@ -75,22 +91,33 @@ namespace HydrationReminderApp.Services
             }
 
         }
-        //Delete account method
+        /// <summary>
+        /// Delete account based in passed (Profile) id.
+        /// </summary>
+        /// <param name="id"></param>
         public static void DeleteAccount(int id)
         {
             Init();
             db.Delete<Profile>(id);
 
         }
-        //Update profile data method
-        public static Profile UpdateProfile(Profile profile)
+       /// <summary>
+       /// Updates profile data in db based on passed (Profile) profile.
+       /// </summary>
+       /// <param name="profile"></param>
+       /// <returns></returns>
+        public static void UpdateProfile(Profile profile)
         {
             Init();
             db.Update(profile);
-            profile = GetProfileData(profile.Username, profile.Password);
-            return profile;
+
         }
-        //Retrieve profile data based of User.username and User.Password from loginPage
+        /// <summary>
+        /// Retrieve Profile data frome db based of User.username and User.Password. Returns (Profile) profile data
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static Profile GetProfileData(string username, string password)
         {
             Init();
@@ -112,6 +139,6 @@ namespace HydrationReminderApp.Services
         {
             InitData();
         }
-      
+
     }
 }

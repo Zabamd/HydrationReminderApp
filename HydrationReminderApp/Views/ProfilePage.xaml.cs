@@ -1,9 +1,8 @@
 ﻿
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using HydrationReminderApp.ViewModels;
 using System;
-using System.Threading.Tasks;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace HydrationReminderApp.Views
 {
@@ -24,8 +23,8 @@ namespace HydrationReminderApp.Views
             UpdateWeightButton.Background = Brush.LightGreen;
             UpdateWeightButton.Text = "Weight Updated";
 
-            await  UpdateWeightButton.TranslateTo(0,-5, 200, Easing.Linear);
-            await UpdateWeightButton.TranslateTo(0, 5, 300 , Easing.Linear);
+            await UpdateWeightButton.TranslateTo(0, -5, 200, Easing.Linear);
+            await UpdateWeightButton.TranslateTo(0, 5, 300, Easing.Linear);
             await UpdateWeightButton.TranslateTo(0, 0, 200, Easing.Linear);
 
             UpdateWeightButton.Background = Color.FromHex("#2196F3");
@@ -48,7 +47,7 @@ namespace HydrationReminderApp.Views
             UpdateWorkoutButton.Text = "Update workout time";
             UpdateWorkoutButton.TextColor = Color.White;
 
-           
+
         }
         public async void DeleteClicked(object sneder, EventArgs e)
         {

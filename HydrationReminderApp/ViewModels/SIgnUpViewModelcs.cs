@@ -1,9 +1,7 @@
 ﻿using HydrationReminderApp.Models;
 using HydrationReminderApp.Services;
 using HydrationReminderApp.Views;
-using System;
 using System.ComponentModel;
-using System.Net.Mail;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
@@ -114,7 +112,7 @@ namespace HydrationReminderApp.ViewModels
                 Password = password,
                 Weight = weight,
                 WorkoutTime = workoutTime,
-                WaterIntake = WaterIntakeCalc(weight, workoutTime)
+                WaterIntake = ISessionContext.WaterIntakeCalc(weight, workoutTime)
             };
             //Check for correct format
             if (PasswordChecks(newUser.Password, repeatPassword) && EmailCheck(newUser.Email))
@@ -123,34 +121,35 @@ namespace HydrationReminderApp.ViewModels
 
                 //Response
                 MessageCheck = OnMessageDisplay(Message);
-                
+
             }
             else
             {
                 Message = "";
                 if (!PasswordChecks(newUser.Password, repeatPassword))
                 {
-                    Message += "Password must contain one small character, one large character, one number and one special sign.\nPassword and repeated password must match.";
-                    password = "";
-                    repeatPassword = "";
+                    Message += "\nPassword must contain one small character, one large character, one number and one special sign.\nPassword and repeated password must match.";
+                    Password = "";
+                    RepeatPassword = "";
                 }
-                if (EmailCheck(newUser.Email))
+                if (!EmailCheck(newUser.Email))
                 {
-                    Message += "Incorrect emial format";
-                    email = "";
+                    Message += "\nIncorrect emial format";
+                    Email = "";
                 }
             }
-        
+
         }
         private async void OnLoginClicked(object obj)
         {
-            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             Message = "";
             MessageCheck = false;
-            username = "";
-            email = "";
-            password = "";
-            repeatPassword = "";
+            Username = "";
+            Email = "";
+            Password = "";
+            RepeatPassword = "";
+            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+
         }
         //Checks if password contains small character, large character, number and special sign using regex 
         private bool PasswordChecks(string password, string repeatedPassword)
@@ -162,7 +161,7 @@ namespace HydrationReminderApp.ViewModels
             Regex p = new Regex(regex);
             Match match = p.Match(password);
 
-            if(match.Success && password.Length >= 8 && (password == repeatedPassword))
+            if (match.Success && password.Length >= 8 && (password == repeatedPassword))
             {
                 return true;
             }
@@ -182,25 +181,16 @@ namespace HydrationReminderApp.ViewModels
             Regex p = new Regex(regex);
             Match match = p.Match(email);
 
-            if(match.Success)
+            if (match.Success)
                 return true;
             else
                 return false;
         }
-        // equation for required water intake in liters
-        private double WaterIntakeCalc(double Weight, int WorkoutTime)
-        { 
-            //kg to pounds
-            double WeightPounds = Weight * 2.2;
-            double reqiredIntakeOnz = (WeightPounds * 0.5) + ((WorkoutTime / 30) * 12);
-
-            //convertion onz to ml to liters
-            return ((reqiredIntakeOnz * 29.57) / 1000);
-        }
+       
         //Based on message form db, change bool value of messageCheck that controls button display in SignUpPage.xaml
         private bool OnMessageDisplay(string response)
         {
-            if(response == "Succesfull Sign Up. Please Login")
+            if (response == "Succesfull Sign Up. Please Login")
             {
                 return true;
             }

@@ -8,7 +8,7 @@ namespace HydrationReminderApp.Models
     [Table("UserData")]
     public class UserData
     {
-        [PrimaryKey,AutoIncrement,Column("Id")]
+        [PrimaryKey, AutoIncrement, Column("Id")]
         public int Id { get; set; }
         [Column("Username")]
         public string Username { get; set; }
