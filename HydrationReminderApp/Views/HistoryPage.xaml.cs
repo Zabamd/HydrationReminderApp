@@ -1,4 +1,5 @@
 ﻿
+using HydrationReminderApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +11,7 @@ namespace HydrationReminderApp.Views
         public HistoryPage()
         {
             InitializeComponent();
+            this.BindingContext = new HistoryViewModel();
         }
     }
 }
