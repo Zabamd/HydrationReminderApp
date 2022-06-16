@@ -8,6 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="BackgroundColor">#ccefff</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -46,6 +47,22 @@
                 <Setter Property="MaximumTrackColor" Value="Red"/>
                 <Setter Property="MinimumTrackColor" Value="LightGreen"/>
             </Style>
+            <Style x:Key="ButtonGridStyleImg" TargetType="ImageButton">
+                <Setter Property="Aspect" Value="AspectFill" />
+                <Setter Property="WidthRequest" Value="100" />
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="Margin" Value="10,10,10,20" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="BorderWidth" Value="1.5" />
+                <Setter Property="BorderColor" Value="{x:StaticResource Primary}" />
+            </Style>
+            <Style x:Key="LabelGridStyle" TargetType="Label">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+
             <!--
                 STYLE END
             -->

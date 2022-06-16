@@ -40,7 +40,7 @@ namespace HydrationReminderApp.Services
             var databasePath = Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, "UserData.db");
             //Table Creation
             dbData = new SQLiteConnection(databasePath);
-            dbData.CreateTable<UserData>();
+            dbData.CreateTable<WaterIntake>();
         }
         /// <summary>
         /// Checks if user exists in db based on User.Username and User.Password and if password is correct

@@ -8,24 +8,44 @@
              Shell.NavBarIsVisible="False"
              x:Class="HydrationReminderApp.Views.MainPage"
              mc:Ignorable="d"
+             xmlns:local ="clr-namespace:HydrationReminderApp.Services"   
              >
+
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModel />
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
+        <StackLayout VerticalOptions="Fill" BackgroundColor ="{x:StaticResource BackgroundColor}" Padding="10,10,10,10">
+            <Label x:Name="WaterIntakeLabel" Text="{Binding  WaterIntakeLabel}" />
             <!--FRAME FOR WATER INTAKE CIRCLE-->
-            <Frame x:Name="CircleFrame">
-                <Path Fill="#079af5" Stroke="#00d6c1">
+            <Frame x:Name="CircleFrame" VerticalOptions="StartAndExpand" HeightRequest="275">
+
+                <Path Fill="{x:StaticResource Primary}" Stroke="#00d6c1" >
                     <Path.Data>
-                        <EllipseGeometry Center="50,50" RadiusX="20" RadiusY="20" />
+                        <EllipseGeometry Center="100,100" RadiusX="100" RadiusY="20" />
                     </Path.Data>
                 </Path>
             </Frame>
-            <!--FRAME FOR BUTTON THAT DISPLAYS GRID-->
-            <Frame x:Name ="ButtonFrame">
-                
-            </Frame>
+          
             <!--FRAME FOR BUTTON GRID-->
-            <Frame x:Name ="ButtonGridFrame" IsEnabled="False">
-
+            <Frame x:Name ="ButtonGridFrame" IsEnabled="True" HeightRequest="275" WidthRequest="400" HasShadow="True" CornerRadius="25" VerticalOptions="CenterAndExpand">
+                
+                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*,*">
+                    <Label Text="Choose amount of water to add:" Grid.Row="0" Grid.ColumnSpan="3" />
+                    <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.50ml.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="1" Grid.Column="0" x:Name="GridButton50ml" AutomationId="50" Command="{Binding GridButtonPushed}" CommandParameter="{x:Reference GridButton50ml}" Clicked="GridButtonClicked"/>
+                    <Label Text="50ml" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="1" Grid.Column="0"/>
+                    <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.100ml.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="1" Grid.Column="1" x:Name="GridButton100ml" AutomationId="100" Command="{Binding GridButtonPushed}" CommandParameter="{x:Reference GridButton100ml}" Clicked="GridButtonClicked"/>
+                    <Label Text="100ml" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="1" Grid.Column="1"/>
+                    <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.150ml.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="1" Grid.Column="2" x:Name="GridButton150ml" AutomationId="150" Command="{Binding GridButtonPushed}" CommandParameter="{x:Reference GridButton150ml}" Clicked="GridButtonClicked"/>
+                    <Label Text="150ml" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="1" Grid.Column="2"/>
+                    <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.200ml.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="2" Grid.Column="0" x:Name="GridButton200ml" AutomationId="200" Command="{Binding GridButtonPushed}" CommandParameter="{x:Reference GridButton200ml}" Clicked="GridButtonClicked"/>
+                    <Label Text="200ml" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="2" Grid.Column="0"/>
+                    <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.250ml.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="2" Grid.Column="1" x:Name="GridButton250ml" AutomationId="250" Command="{Binding GridButtonPushed}" CommandParameter="{x:Reference GridButton250ml}" Clicked="GridButtonClicked"/>
+                    <Label Text="250ml" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="2" Grid.Column="1"/>
+                    <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.custom.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="2" Grid.Column="2" x:Name="CustomButton"  AutomationId="400" Command="{Binding CustomButtonPushed}" CommandParameter="{x:Reference CustomButton}" Clicked="GridButtonClicked"/>
+                    <Label Text="Custom" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="2" Grid.Column="2"/>
+                </Grid>
             </Frame>
         </StackLayout>
     </ContentPage.Content>

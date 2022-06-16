@@ -13,8 +13,12 @@ namespace HydrationReminderApp.ViewModels
 
         public Command SignupCommand { get; }
         public Command LoginCommand { get; }
+        public SignUpViewModel()
+        {
+            SignupCommand = new Command(OnSignUpClicked);
+            LoginCommand = new Command(OnLoginClicked);
+        }
 
-        Profile newUser;
 
         private string message;
         public string Message
@@ -97,15 +101,11 @@ namespace HydrationReminderApp.ViewModels
             }
         }
 
-        public SignUpViewModel()
-        {
-            SignupCommand = new Command(OnSignUpClicked);
-            LoginCommand = new Command(OnLoginClicked);
-        }
+
         private void OnSignUpClicked(object obj)
         {
 
-            newUser = new Profile()
+            Profile newUser = new Profile()
             {
                 Username = username,
                 Email = email,

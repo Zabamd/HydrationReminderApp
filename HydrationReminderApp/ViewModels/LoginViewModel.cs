@@ -65,6 +65,8 @@ namespace HydrationReminderApp.ViewModels
             if (IsValid)
             {
                 ISessionContext.Profile = DataBaseService.GetProfileData(user.Username, user.Password);
+
+                ISessionContext.Water.ExpectedAmount = ISessionContext.Profile.WaterIntake;
                 Username = "";
                 Password = "";
                 ErrorMessage = "";
