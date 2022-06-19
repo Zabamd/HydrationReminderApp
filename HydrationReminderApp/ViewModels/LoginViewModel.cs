@@ -1,6 +1,7 @@
 ﻿using HydrationReminderApp.Models;
 using HydrationReminderApp.Services;
 using HydrationReminderApp.Views;
+using System;
 using System.ComponentModel;
 using Xamarin.Forms;
 
@@ -64,10 +65,8 @@ namespace HydrationReminderApp.ViewModels
 
             if (IsValid)
             {
-                ISessionContext.Profile = DataBaseService.GetProfileData(user.Username, user.Password);
-                Username = "";
-                Password = "";
-                ErrorMessage = "";
+                SessionInit(user);
+
                 await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
             }
             else
@@ -80,10 +79,32 @@ namespace HydrationReminderApp.ViewModels
         }
         private async void OnSignUp(object obj)
         {
-            username = "";
-            password = "";
-            errorMessage = "";
             await Shell.Current.GoToAsync($"//{nameof(SignUpPage)}");
+        }
+        //Initialising current session
+        private void SessionInit(User user)
+        {
+            ISessionContext.Profile = DataBaseService.GetProfileData(user.Username, user.Password);
+
+            DateTime date = DateTime.Now;
+
+            var waterIntake = new WaterIntake()
+            {
+                Username = ISessionContext.Profile.Username,
+                ExpectedAmount = ISessionContext.Profile.WaterIntake,
+                Date = date.ToString(),
+            };
+
+            ISessionContext.WaterIntake = waterIntake;
+            if (DataBaseService.CheckToday(date, ISessionContext.WaterIntake) is null)
+            {
+                ISessionContext.WaterIntake.Amount = 0;
+            }
+            else
+            {
+                ISessionContext.WaterIntake.Amount = DataBaseService.CheckToday(date, ISessionContext.WaterIntake).Amount;
+            }
+
         }
 
 

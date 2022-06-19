@@ -52,9 +52,9 @@ namespace HydrationReminderApp.Views
         public async void DeleteClicked(object sneder, EventArgs e)
         {
             DeleteAccount.Text = "Click again to confirm";
-            await UpdateWorkoutButton.TranslateTo(-5, 0, 200, Easing.Linear);
-            await UpdateWorkoutButton.TranslateTo(5, 0, 300, Easing.Linear);
-            await UpdateWorkoutButton.TranslateTo(0, 0, 300, Easing.Linear);
+            await DeleteAccount.TranslateTo(-5, 0, 200, Easing.Linear);
+            await DeleteAccount.TranslateTo(5, 0, 300, Easing.Linear);
+            await DeleteAccount.TranslateTo(0, 0, 300, Easing.Linear);
         }
     }
 }

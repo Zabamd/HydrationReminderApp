@@ -34,12 +34,15 @@
     <!--
     ROUTES START
     -->
+   
+    
     <ShellItem Route="LoginPage" FlyoutItemIsVisible ="False">
         <ShellContent  ContentTemplate="{DataTemplate local:LoginPage}" />
     </ShellItem>
     <ShellItem Route="SignUpPage" FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate local:SignUpPage}" />
     </ShellItem>
+
     <TabBar>
         <Tab Title="MainPage" Icon="" FlyoutItemIsVisible="False">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
@@ -51,7 +54,7 @@
             <ShellContent ContentTemplate="{DataTemplate local:ProfilePage}" Route="ProfilePage" />
         </Tab>
     </TabBar>
-        <!--
+       <!--
     ROUTES END
     -->
 </Shell>

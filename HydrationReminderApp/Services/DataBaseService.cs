@@ -1,5 +1,7 @@
 ﻿using HydrationReminderApp.Models;
 using SQLite;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -12,7 +14,7 @@ namespace HydrationReminderApp.Services
     {
         //DB handler
         private static SQLiteConnection db;
-        private static SQLiteConnection dbData;
+        private static SQLiteConnection dbWater;
 
         /// <summary>
         ///  Inicialization of db for profile information
@@ -34,13 +36,13 @@ namespace HydrationReminderApp.Services
         public static void InitData()
         {
             //if db exists don't reinitialize
-            if (dbData != null)
+            if (dbWater != null)
                 return;
             //Absolute path to db file
-            var databasePath = Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, "UserData.db");
+            var databasePath = Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, "WaterIntake.db");
             //Table Creation
-            dbData = new SQLiteConnection(databasePath);
-            dbData.CreateTable<UserData>();
+            dbWater = new SQLiteConnection(databasePath);
+            dbWater.CreateTable<WaterIntake>();
         }
         /// <summary>
         /// Checks if user exists in db based on User.Username and User.Password and if password is correct
@@ -101,11 +103,11 @@ namespace HydrationReminderApp.Services
             db.Delete<Profile>(id);
 
         }
-       /// <summary>
-       /// Updates profile data in db based on passed (Profile) profile.
-       /// </summary>
-       /// <param name="profile"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// Updates profile data in db based on passed (Profile) profile.
+        /// </summary>
+        /// <param name="profile"></param>
+        /// <returns></returns>
         public static void UpdateProfile(Profile profile)
         {
             Init();
@@ -130,14 +132,40 @@ namespace HydrationReminderApp.Services
         //PROFILE TABLE ENDS
 
         //DATA TABLE STARTS
-        public static void ReadData()
+        /// <summary>
+        /// Method for retriveing data from db for plotting a graph
+        /// </summary>
+        public static List<WaterIntake> ReadData(WaterIntake waterIntake)
         {
 
             InitData();
+            var query = from s in db.Table<WaterIntake>()
+                        where s.Username == waterIntake.Username
+                        select s;
+
+            return query.ToList<WaterIntake>();
         }
-        public static void AddData()
+        /// <summary>
+        /// Method for adding data to the db
+        /// </summary>
+        public static void UpdateData(WaterIntake waterIntake)
         {
             InitData();
+            dbWater.Insert(waterIntake);
+
+
+        }
+        /// <summary>
+        /// Method for retriveing amount of water consumed today
+        /// </summary>
+        public static WaterIntake CheckToday(DateTime date, WaterIntake waterIntake)
+        {
+            InitData();
+            var query = from s in db.Table<WaterIntake>()
+                        where s.Username == waterIntake.Username && s.Date == waterIntake.Date
+                        select s;
+
+            return query.LastOrDefault();
         }
 
     }

@@ -6,6 +6,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Drawable\DrinkIcons\100ml.jpg" />
+    <None Remove="Resources\Drawable\DrinkIcons\150ml.jpg" />
+    <None Remove="Resources\Drawable\DrinkIcons\200ml.jpg" />
+    <None Remove="Resources\Drawable\DrinkIcons\250ml.jpg" />
+    <None Remove="Resources\Drawable\DrinkIcons\50ml.jpg" />
+    <None Remove="Resources\Drawable\DrinkIcons\custom.jpg" />
+    <None Remove="Resources\Drawable\Logos\waterDropLogo.jpg" />
+    <None Remove="Resources\Drawable\Logos\waveLogo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Drawable\DrinkIcons\100ml.jpg" />
+    <EmbeddedResource Include="Resources\Drawable\DrinkIcons\150ml.jpg" />
+    <EmbeddedResource Include="Resources\Drawable\DrinkIcons\200ml.jpg" />
+    <EmbeddedResource Include="Resources\Drawable\DrinkIcons\250ml.jpg" />
+    <EmbeddedResource Include="Resources\Drawable\DrinkIcons\50ml.jpg" />
+    <EmbeddedResource Include="Resources\Drawable\DrinkIcons\custom.jpg" />
+    <EmbeddedResource Include="Resources\Drawable\Logos\waterDropLogo.jpg" />
+    <EmbeddedResource Include="Resources\Drawable\Logos\waveLogo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FreshMvvm" Version="4.0.1" />
     <PackageReference Include="Microcharts" Version="0.9.5.9" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
@@ -27,9 +55,5 @@
     <EmbeddedResource Update="Views\SignUpPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 </Project>
