@@ -186,7 +186,7 @@ namespace HydrationReminderApp.ViewModels
             else
                 return false;
         }
-       
+
         //Based on message form db, change bool value of messageCheck that controls button display in SignUpPage.xaml
         private bool OnMessageDisplay(string response)
         {

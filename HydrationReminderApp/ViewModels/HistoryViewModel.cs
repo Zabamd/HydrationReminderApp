@@ -1,6 +1,5 @@
 ﻿
 using System.ComponentModel;
-using Xamarin.Forms;
 
 namespace HydrationReminderApp.ViewModels
 {
@@ -9,7 +8,7 @@ namespace HydrationReminderApp.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public HistoryViewModel()
         {
-            
+
         }
     }
 }

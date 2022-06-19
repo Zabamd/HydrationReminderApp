@@ -1,11 +1,10 @@
 ﻿using SQLite;
-using System;
 
 namespace HydrationReminderApp.Models
 {   /// <summary>
     /// Table Used for storing  User water intake data 
     /// </summary>
-    [Table("UserData")]
+    [Table("WaterIntake")]
     public class WaterIntake
     {
         [PrimaryKey, AutoIncrement, Column("Id")]
@@ -19,6 +18,6 @@ namespace HydrationReminderApp.Models
         [Column("ExpectedAmount")]
         public double ExpectedAmount { get; set; }
         [Column("Date")]
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }

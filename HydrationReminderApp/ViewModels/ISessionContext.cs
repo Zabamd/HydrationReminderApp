@@ -7,7 +7,7 @@ namespace HydrationReminderApp.ViewModels
     public static class ISessionContext
     {
         public static Profile Profile { get; set; }
-        public static WaterIntake Water { get; set; }
+        public static WaterIntake WaterIntake { get; set; }
         public static string CustomAmount { get; set; }
 
         // equation for required water intake in liters

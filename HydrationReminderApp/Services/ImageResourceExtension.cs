@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,13 +8,13 @@ namespace HydrationReminderApp.Services
     /// <summary>
     /// Class used for Image path in XAML
     /// </summary>
-    [ContentProperty (nameof(Source))]
+    [ContentProperty(nameof(Source))]
     public class ImageResourceExtension : IMarkupExtension
     {
         public string Source { get; set; }
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            if(Source == null)
+            if (Source == null)
             {
                 return null;
             }

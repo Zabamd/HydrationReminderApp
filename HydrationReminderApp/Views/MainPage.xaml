@@ -12,22 +12,25 @@
              >
 
     <ContentPage.BindingContext>
-        <viewmodels:LoginViewModel />
+        <viewmodels:MainPageViewModel />
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
         <StackLayout VerticalOptions="Fill" BackgroundColor ="{x:StaticResource BackgroundColor}" Padding="10,10,10,10">
-            <Label x:Name="WaterIntakeLabel" Text="{Binding  WaterIntakeLabel}" />
-            <!--FRAME FOR WATER INTAKE CIRCLE-->
-            <Frame x:Name="CircleFrame" VerticalOptions="StartAndExpand" HeightRequest="275">
-
-                <Path Fill="{x:StaticResource Primary}" Stroke="#00d6c1" >
-                    <Path.Data>
-                        <EllipseGeometry Center="100,100" RadiusX="100" RadiusY="20" />
-                    </Path.Data>
-                </Path>
-            </Frame>
           
+            <!--LAYOUT FOR WATER INTAKE CIRCLE-->
+            <FlexLayout x:Name="CircleFrame" VerticalOptions="CenterAndExpand" HeightRequest="275"   JustifyContent="Center" AlignItems="Center"  Direction="Column">
+                <Ellipse x:Name="OuterCircle" Fill="{x:StaticResource Primary}" WidthRequest="250" HeightRequest="250" Opacity="0.33" />
+                <Ellipse x:Name="InnerCircle" Fill="blue" WidthRequest="1" HeightRequest="1" />
+            </FlexLayout>
+            <Label x:Name="WaterIntakeLabel" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
+                <Label.Text>
+                    <MultiBinding StringFormat="{}{0} / {1}">
+                        <Binding Path="WaterAmount" />
+                        <Binding Path="ExpectedWaterAmount" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
             <!--FRAME FOR BUTTON GRID-->
             <Frame x:Name ="ButtonGridFrame" IsEnabled="True" HeightRequest="275" WidthRequest="400" HasShadow="True" CornerRadius="25" VerticalOptions="CenterAndExpand">
                 
@@ -43,7 +46,7 @@
                     <Label Text="200ml" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="2" Grid.Column="0"/>
                     <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.250ml.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="2" Grid.Column="1" x:Name="GridButton250ml" AutomationId="250" Command="{Binding GridButtonPushed}" CommandParameter="{x:Reference GridButton250ml}" Clicked="GridButtonClicked"/>
                     <Label Text="250ml" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="2" Grid.Column="1"/>
-                    <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.custom.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="2" Grid.Column="2" x:Name="CustomButton"  AutomationId="400" Command="{Binding CustomButtonPushed}" CommandParameter="{x:Reference CustomButton}" Clicked="GridButtonClicked"/>
+                    <ImageButton Source="{local:ImageResourceExtension HydrationReminderApp.Resources.Drawable.DrinkIcons.custom.jpg}" Style="{x:StaticResource ButtonGridStyleImg}" Grid.Row="2" Grid.Column="2" x:Name="CustomButton"  AutomationId="400" Command="{Binding CustomButtonPushed}"  Clicked="GridButtonClicked"/>
                     <Label Text="Custom" Style="{x:StaticResource LabelGridStyle}"  Grid.Row="2" Grid.Column="2"/>
                 </Grid>
             </Frame>

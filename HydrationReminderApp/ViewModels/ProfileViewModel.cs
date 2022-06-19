@@ -45,16 +45,18 @@ namespace HydrationReminderApp.ViewModels
         {
             ISessionContext.Profile.Weight = weight;
             ISessionContext.Profile.WaterIntake = ISessionContext.WaterIntakeCalc(ISessionContext.Profile.Weight, ISessionContext.Profile.WorkoutTime);
-            ISessionContext.Water.ExpectedAmount = ISessionContext.Profile.WaterIntake;
+            ISessionContext.WaterIntake.ExpectedAmount = ISessionContext.Profile.WaterIntake;
             DataBaseService.UpdateProfile(ISessionContext.Profile);
+            DataBaseService.UpdateData(ISessionContext.WaterIntake);
         }
 
         private void OnUpdateWorkoutClicked(object obj)
         {
             ISessionContext.Profile.WorkoutTime = WorkoutTime;
             ISessionContext.Profile.WaterIntake = ISessionContext.WaterIntakeCalc(ISessionContext.Profile.Weight, ISessionContext.Profile.WorkoutTime);
-            ISessionContext.Water.ExpectedAmount = ISessionContext.Profile.WaterIntake;
+            ISessionContext.WaterIntake.ExpectedAmount = ISessionContext.Profile.WaterIntake;
             DataBaseService.UpdateProfile(ISessionContext.Profile);
+            DataBaseService.UpdateData(ISessionContext.WaterIntake);
         }
         private async void OnDeleteAccountClicked(object ob)
         {

@@ -34,7 +34,8 @@
     <!--
     ROUTES START
     -->
-
+   
+    
     <ShellItem Route="LoginPage" FlyoutItemIsVisible ="False">
         <ShellContent  ContentTemplate="{DataTemplate local:LoginPage}" />
     </ShellItem>
@@ -53,8 +54,7 @@
             <ShellContent ContentTemplate="{DataTemplate local:ProfilePage}" Route="ProfilePage" />
         </Tab>
     </TabBar>
-
-        <!--
+       <!--
     ROUTES END
     -->
 </Shell>
