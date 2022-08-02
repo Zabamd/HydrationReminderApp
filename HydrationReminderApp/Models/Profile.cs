@@ -10,7 +10,7 @@ namespace HydrationReminderApp.Models
 
         [PrimaryKey, AutoIncrement]
         [Column("Id")]
-        public int Id { get; set; }
+        public int Id { get; }
         [Column("Username")]
         public string Username { get; set; }
         [Column("Password")]

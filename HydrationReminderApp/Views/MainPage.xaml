@@ -23,6 +23,7 @@
                 <Ellipse x:Name="OuterCircle" Fill="{x:StaticResource Primary}" WidthRequest="250" HeightRequest="250" Opacity="0.33" />
                 <Ellipse x:Name="InnerCircle" Fill="blue" WidthRequest="1" HeightRequest="1" />
             </FlexLayout>
+            
             <Label x:Name="WaterIntakeLabel" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
                 <Label.Text>
                     <MultiBinding StringFormat="{}{0} / {1}">

@@ -19,7 +19,7 @@ namespace HydrationReminderApp.Services
         /// <summary>
         ///  Inicialization of db for profile information
         /// </summary>
-        public static void Init()
+        private static void Init()
         {
             //if db exists don't reinitialize
             if (db != null)
@@ -33,7 +33,7 @@ namespace HydrationReminderApp.Services
         /// <summary>
         /// Inicialization of db for user data
         /// </summary>
-        public static void InitData()
+        private static void InitData()
         {
             //if db exists don't reinitialize
             if (dbWater != null)
