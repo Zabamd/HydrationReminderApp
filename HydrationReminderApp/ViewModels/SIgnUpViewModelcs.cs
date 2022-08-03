@@ -117,7 +117,7 @@ namespace HydrationReminderApp.ViewModels
             //Check for correct format
             if (PasswordChecks(newUser.Password, repeatPassword) && EmailCheck(newUser.Email))
             {
-                Message = DataBaseService.SignUp(newUser.Username, newUser.Password, newUser.Email, newUser.Weight, newUser.WorkoutTime, newUser.WaterIntake);
+                Message = DataBaseService.SignUp(newUser);
 
                 //Response
                 MessageCheck = OnMessageDisplay(Message);

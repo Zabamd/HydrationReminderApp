@@ -60,10 +60,10 @@ namespace HydrationReminderApp.ViewModels
         {
             var user = new User(username, password);
 
-            bool IsValid = DataBaseService.Login(user);
+            bool isValid = DataBaseService.ChceckIfValid(user);
 
 
-            if (IsValid)
+            if (isValid)
             {
                 SessionInit(user);
 
@@ -81,10 +81,11 @@ namespace HydrationReminderApp.ViewModels
         {
             await Shell.Current.GoToAsync($"//{nameof(SignUpPage)}");
         }
+        
         //Initialising current session
         private void SessionInit(User user)
         {
-            ISessionContext.Profile = DataBaseService.GetProfileData(user.Username, user.Password);
+            ISessionContext.Profile = DataBaseService.Login(user);
 
             DateTime date = DateTime.Now;
 
@@ -96,6 +97,7 @@ namespace HydrationReminderApp.ViewModels
             };
 
             ISessionContext.WaterIntake = waterIntake;
+            
             if (DataBaseService.CheckToday(date, ISessionContext.WaterIntake) is null)
             {
                 ISessionContext.WaterIntake.Amount = 0;

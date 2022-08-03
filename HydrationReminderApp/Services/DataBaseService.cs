@@ -1,9 +1,8 @@
 ﻿using HydrationReminderApp.Models;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Data.SqlClient;
 
 namespace HydrationReminderApp.Services
 {
@@ -13,78 +12,88 @@ namespace HydrationReminderApp.Services
     public static class DataBaseService
     {
         //DB handler
-        private static SQLiteConnection db;
-        private static SQLiteConnection dbWater;
+        private static SqlConnectionStringBuilder _builder;
 
         /// <summary>
         ///  Inicialization of db for profile information
         /// </summary>
-        private static void Init()
+        private static SqlConnection  Init()
         {
-            //if db exists don't reinitialize
-            if (db != null)
-                return;
-            //Absolute path to db file
-            var databasePath = Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, "Profile.db");
-            //Table Creation
-            db = new SQLiteConnection(databasePath);
-            db.CreateTable<Profile>();
-        }
-        /// <summary>
-        /// Inicialization of db for user data
-        /// </summary>
-        private static void InitData()
-        {
-            //if db exists don't reinitialize
-            if (dbWater != null)
-                return;
-            //Absolute path to db file
-            var databasePath = Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, "WaterIntake.db");
-            //Table Creation
-            dbWater = new SQLiteConnection(databasePath);
-            dbWater.CreateTable<WaterIntake>();
-        }
-        /// <summary>
-        /// Checks if user exists in db based on User.Username and User.Password and if password is correct
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public static bool Login(User user)
-        {
-            Init();
-            var check = db.Table<Profile>().Where(x => (x.Username == user.Username) && (x.Password == user.Password)).FirstOrDefault();
-            if (check != null)
+            _builder = new SqlConnectionStringBuilder()
             {
-                return true;
-            }
-            else
+                DataSource = "zabamd-hydration-app.database.windows.net",
+                UserID = "Zabamd",
+                Password = "$Admin11",
+                InitialCatalog = "Userdb"
+
+            };
+            
+            return new SqlConnection(_builder.ConnectionString);
+        }
+
+        public static bool ChceckIfValid(User user)
+        {
+            var connection = Init();
+            connection.Open();
+            var query = "SELECT * " 
+                        + "FROM Profiles " 
+                        + $"WHERE Username = {user.Username} AND Password = {user.Password}";
+            SqlCommand command = new SqlCommand(query, connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            bool result = reader.HasRows;
+            
+            connection.Close();
+            reader.Close();
+            
+            return result;
+        }
+        public static Profile Login(User user)
+        {
+            var connection = Init();
+            connection.Open();
+
+            List<Profile> result = new List<Profile>();
+
+            var query = "SELECT * " 
+                            + "FROM Profiles " 
+                            + $"WHERE Username={user.Username} AND Password = {user.Password}";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
             {
-                return false;
+                result.Add(new Profile()
+                {
+                    Id = (int)reader["Id"],
+                    Username = (string)reader["Username"],
+                    Password = (string)reader["Password"],
+                    Email = (string)reader["Email"],
+                    Weight = (double)reader["Weight"],
+                    WorkoutTime = (int)reader["WorkoutTime"],
+                    WaterIntake = (double)reader["WaterIntake"],
+                });
             }
+
+            connection.Close();
+            reader.Close();
+            
+            return result[0];
         }
         /// <summary>
         ///  Creates new profile object and after checking if profile already exists in db, inserts it into db. Returns (string) message based on check
         /// </summary>
-        public static string SignUp(string username, string password, string email, double weight, int workoutTime, double waterIntake)
+        public static string SignUp(Profile profile )
         {
-            Init();
-            var profile = new Profile
+            var connection = Init();
+            connection.Open();
+
+            bool check = ChceckIfValid(new User(profile.Username, profile.Password));
+
+            if (check)
             {
-                Username = username,
-                Password = password,
-                Email = email,
-                Weight = weight,
-                WorkoutTime = workoutTime,
-                WaterIntake = waterIntake
-
-            };
-
-            //Check if accound with identical email or username already exist in database
-            var check = db.Table<Profile>().Where(x => (x.Username == profile.Username) || (x.Email == profile.Email)).FirstOrDefault();
-
-            if (check == null)
-            {
-                db.Insert(profile);
+                InsertProfile(profile);
                 return "Succesfull Sign Up. Please Login";
             }
             else
@@ -92,6 +101,11 @@ namespace HydrationReminderApp.Services
                 return "Profile already exists. Please Login";
             }
 
+        }
+
+        public static void InsertProfile(Profile profile)
+        {
+            var query = "INSERT INTO Profiles VALUES {profile.Username}";
         }
         /// <summary>
         /// Delete account based in passed (Profile) id.
